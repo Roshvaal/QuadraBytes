@@ -1,122 +1,110 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [name, setName] = useState("");
+  const [score, setScore] = useState("");
+  const [result, setResult] = useState(null);
+  const [error, setError] = useState("");
+
+  const evaluateGrade = () => {
+    const grade = Number(score);
+
+    if (name === "" || score === "" || grade < 0 || grade > 100) {
+      setError("Invalid score.");
+      setResult(null);
+      return;
+    }
+
+    setError("");
+
+    let remarks = "";
+    let color = "";
+
+    if (grade <= 74) {
+      remarks = "Failed";
+      color = "red";
+    } else if (grade <= 79) {
+      remarks = "Passed";
+      color = "yellow";
+    } else if (grade <= 84) {
+      remarks = "Good";
+      color = "blue";
+    } else if (grade <= 90) {
+      remarks = "Very Good";
+      color = "green";
+    } else {
+      remarks = "Excellent";
+      color = "green";
+    }
+
+    setResult({
+      name: name,
+      score: grade,
+      remarks: remarks,
+      color: color
+    });
+  };
+
+  const clearFields = () => {
+    setName("");
+    setScore("");
+    setResult(null);
+    setError("");
+  };
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="container">
+      <div className="card">
+        <div className="header">
+          <h1>Student Grade Evaluation</h1>
+          <p>Activity 2</p>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        <div className="content">
+          <label>Student Name</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          <label>Score</label>
+          <input
+            type="number"
+            placeholder="Enter score (0-100)"
+            value={score}
+            onChange={(e) => setScore(e.target.value)}
+          />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+          {error && <div className="error">{error}</div>}
+
+          <div className="buttons">
+            <button onClick={evaluateGrade}>
+              Evaluate
+            </button>
+
+            <button className="clear" onClick={clearFields}>
+              Clear
+            </button>
+          </div>
+
+          {result && (
+            <div className={`result ${result.color}`}>
+              <p>Student Name</p>
+              <h2>{result.name}</h2>
+
+              <p>Score</p>
+              <h2>{result.score}</h2>
+
+              <p>Remarks</p>
+              <h1>{result.remarks}</h1>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default App
+export default App;
