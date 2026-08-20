@@ -7,6 +7,7 @@ import './App.css'
 import NavBar from './components/NavBar.jsx'
 import Home from './components/pages/Home.jsx'
 import Login from './components/pages/Login.jsx'
+import AttendanceChecker from './components/pages/AttendanceChecker.jsx'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/activity1" element={<Login />} />
+        <Route path="/activity5" element={<AttendanceChecker />}/>
       </Routes>
     </>
   );
