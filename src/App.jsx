@@ -1,17 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import NavBar from "./components/NavBar.jsx";
+import Home from "./components/pages/Home.jsx";
+import Login from "./components/pages/Login.jsx";
+import Calc from "./components/pages/Calc.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <h1>Hello Ralph...</h1>
+      <NavBar />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/activity1" element={<Login />} />
+        <Route path="/activity2" element={<></>} />
+        <Route path="/activity3" element={<></>} />
+        <Route path="/activity4" element={<Calc />} />
+        <Route path="/activity5" element={<></>} />
+        <Route path="*" element={<></>} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
